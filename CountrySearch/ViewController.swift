@@ -37,23 +37,52 @@ extension ViewController: UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return country.count
+        
+        
+        if searchOk {
+            return searchCountry.count
+        }
+        else{
+            return country.count
+        }
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
           
         let cell = UITableViewCell()
-        cell.textLabel?.text = country[indexPath.row]
+        if searchOk {
+            cell.textLabel?.text = searchCountry[indexPath.row]
+        }else{
+            cell.textLabel?.text = country[indexPath.row]
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       print(" Selected Country: \(country[indexPath.row])")
+        if searchOk{
+            print(" Selected Country: \(searchCountry[indexPath.row])")
+        }else{
+            print(" Selected Country: \(country[indexPath.row])")
+        }
     }
     
 }
 extension  ViewController:UISearchBarDelegate {
     
-
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+         print(" Search Result : \(searchText)")
+        
+        if searchText == ""{
+            searchOk = false
+        }else{
+            searchOk = true
+            searchCountry = country.filter({ $0.lowercased().prefix(searchText.count) == searchText.lowercased() })
+        }
+        
+        tableView.reloadData()
+        
+        
+    }
     
     
 }
