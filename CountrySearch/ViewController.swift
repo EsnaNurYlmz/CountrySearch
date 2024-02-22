@@ -23,8 +23,37 @@ class ViewController: UIViewController {
                     "Colombia","Comoros","Congo","Kosovo","Kuwait","Cuba","Laos","Lesotho","Latvia","Liberia","Libya","Liechtenstein,","Lithuania","Lebanon","Luxembourg","Hungary","Madagascar","Macedonia","Malawi","Maldives","Malaysia","Mali","Malta","Marshall Islands","Mauritius","Mexico","Micronesia","Mongolia","Moldova","Monaco","Mauritania","Mozambique","Myanmar (Burma)","Namibia","Nauru","Nepal","Niger","Nigeria","Nicaragua","Norway","Central African Republic","Uzbekistan","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Poland","Portugal","Romania","Rwanda","Russia","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Senegal","Seychelles","Sierra Leone","Singapore","Slovenia","Slovakia"
 ]
         
-        
+        searchBar.delegate = self
+               tableView.delegate = self
+               tableView.dataSource = self
        
     }
 }
 
+extension ViewController: UITableViewDelegate , UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return country.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+          
+        let cell = UITableViewCell()
+        cell.textLabel?.text = country[indexPath.row]
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       print(" Selected Country: \(country[indexPath.row])")
+    }
+    
+}
+extension  ViewController:UISearchBarDelegate {
+    
+
+    
+    
+}
